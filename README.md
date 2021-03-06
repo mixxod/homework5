@@ -20,7 +20,7 @@ apt install postgresql
 apt install postgresql-contrib
 apt install pg-activity (pgbench в нем уже имеется)
 ```
-
+```
 # создание пользователя, базы и проверки
 Можем убедиться, что создался пользбхователь postgresql
 cat /etc/passwd | grep pos
@@ -38,14 +38,16 @@ create user mixxod with password 'pass';
 create database mikedb;
 Подключаемся к БД
 \c mikedb
-Убождаемся, что база пуста и выходим из postgres
-
+Убeждаемся, что база пуста и выходим из postgres
+```
+```
 # клонируем базу из github
 git clone https://github.com/pthom/northwind_psql.git
 # Перенос содержимога базы sql в базу mikedb
 Меняем пользователя
 su postgres
-
+```
+```
 # заливаем содержимое в БД
 psql -d mikedb -f ./northwind.sql
 ИЛИ (равнозначные команды)
@@ -57,6 +59,7 @@ psql
 \с mikedb
 Смотрим содержимое
 \dt+
+```
 
 # делаем дамп БД
 mkdir /tmp/dump_backup
