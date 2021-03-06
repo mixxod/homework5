@@ -60,19 +60,32 @@ psql
 Смотрим содержимое
 \dt+
 ```
-
+```
 # делаем дамп БД
+Т.к для директорий из под разных пользователей нужны свои права.
+Создаем директрию в пользователе postgres 
 mkdir /tmp/dump_backup
-pg_dump homework > /tmp/dump_backup/homework.sql
-# входим в PostgreSQL и роняем БД 
+Копируем содержимое БД mikedb 
+pg_dump mikedb > /tmp/dump_backup/prod.dump.sql
+```
+```
+# входим в PostgreSQL и удаляем БД 
 psql
-drop database homework;
+drop database mikedb;
+```
+```
 # создаем БД
-create database homework;
+Работаем в psql
+create database mikedb2;
 \q
+```
+```
 # восстанавливаем содержимое БД из дампа
-psql homework < /tmp/dump_backup/homework.sql
-# проверяем что БД восстановилась (опционально)
+psql mikedb2 < /tmp/dump_backup/prod.dump.sql
+```
+```
+# Выполним проверку восстановленой БД
 psql
-\c homework
+\c mikedb2
 \dt+
+```
