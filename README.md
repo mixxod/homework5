@@ -9,15 +9,18 @@ Home work 5 (sql)
 проверить восстановление (предварительно удалив базу)
 Выложить на GIT список команд и файл с дампом базы данных
 ```
-
-# получаем права суперпользователя
+```
+# получаем права суперпользователя и обновляем репозиторий 
 sudo su
-# обновляем репозиторий 
 apt update
+```
+```
 # устанавливаем необходимые пакеты
 apt install postgresql
 apt install postgresql-contrib
 apt install pg-activity (pgbench в нем уже имеется)
+```
+
 # создание пользователя, базы и проверки
 Можем убедиться, что создался пользбхователь postgresql
 cat /etc/passwd | grep pos
@@ -36,16 +39,25 @@ create database mikedb;
 Подключаемся к БД
 \c mikedb
 Убождаемся, что база пуста и выходим из postgres
+
 # клонируем базу из github
 git clone https://github.com/pthom/northwind_psql.git
 # Перенос содержимога базы sql в базу mikedb
 Меняем пользователя
 su postgres
+
 # заливаем содержимое в БД
 psql -d mikedb -f ./northwind.sql
 ИЛИ (равнозначные команды)
 psql -d mikedb -f /home/red/northwind_psql/northwind.sql
-# Создание дампа
+Убедимся, чтобаза наполнилась
+psql 
+\l
+Подключаемся к БД
+\с mikedb
+Смотрим содержимое
+\dt+
+
 # делаем дамп БД
 mkdir /tmp/dump_backup
 pg_dump homework > /tmp/dump_backup/homework.sql
