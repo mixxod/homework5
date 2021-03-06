@@ -1,2 +1,54 @@
 # homework5
-base
+
+
+# получаем права суперпользователя
+sudo su
+# обновляем репозиторий 
+apt update
+# устанавливаем необходимые пакеты
+apt install postgresql
+apt install postgresql-contrib
+apt install pg-activity (pgbench в нем уже имеется)
+# создание пользователя, базы и проверки
+Можем убедиться, что создался пользбхователь postgresql
+cat /etc/passwd | grep pos
+Переходим под пользователя postgres
+su postgres
+psql
+Для просмотра списка баз данных вводим команду
+\l или /l+ для расширеного вида
+\du+ (описание ролей)
+Создаем пользователя под постгрес (postgres-#)
+create user mixxod with password 'pass';
+проверяем 
+\du+
+Создаем базу данных
+create database mikedb;
+Подключаемся к БД
+\c mikedb
+Убождаемся, что база пуста и выходим из postgres
+# клонируем базу из github
+git clone https://github.com/pthom/northwind_psql.git
+# Перенос содержимога базы sql в базу mikedb
+Меняем пользователя
+su postgres
+# заливаем содержимое в БД
+psql -d mikedb -f ./northwind.sql
+ИЛИ (равнозначные команды)
+psql -d mikedb -f /home/red/northwind_psql/northwind.sql
+# Создание дампа
+# делаем дамп БД
+mkdir /tmp/dump_backup
+pg_dump homework > /tmp/dump_backup/homework.sql
+# входим в PostgreSQL и роняем БД 
+psql
+drop database homework;
+# создаем БД
+create database homework;
+\q
+# восстанавливаем содержимое БД из дампа
+psql homework < /tmp/dump_backup/homework.sql
+# проверяем что БД восстановилась (опционально)
+psql
+\c homework
+\dt+
